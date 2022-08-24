@@ -8,7 +8,7 @@ Vector::Vector(int _size, float *_array, bool _malloc)
 
 	if (_malloc)
 	{
-		cudaMalloc(&array, size * sizeof(float));
+		cudaMallocManaged(&array, size * sizeof(float));
 		for (int i = 0; i < size; i++)
 			array[i] = _array[i];
 	}
@@ -26,7 +26,7 @@ void Vector::free()
 Vector Vector::operator+(const Vector &that)
 {
 	float *result;
-	cudaMalloc(&result, size * sizeof(float));
+	cudaMallocManaged(&result, size * sizeof(float));
 
 	int threadsPerBlock = 256;
 	int numberOfBlocks = (size + threadsPerBlock - 1) / threadsPerBlock;
@@ -41,7 +41,7 @@ Vector Vector::operator+(const Vector &that)
 float Vector::operator*(const Vector &that)
 {
 	float *result;
-	cudaMalloc(&result, size * sizeof(float));
+	cudaMallocManaged(&result, size * sizeof(float));
 
 	int threadsPerBlock = 256;
 	int numberOfBlocks = (size + threadsPerBlock - 1) / threadsPerBlock;
@@ -58,7 +58,7 @@ float Vector::operator*(const Vector &that)
 Vector Vector::operator*(float scalar)
 {
 	float *result;
-	cudaMalloc(&result, size * sizeof(float));
+	cudaMallocManaged(&result, size * sizeof(float));
 
 	int threadsPerBlock = 256;
 	int numberOfBlocks = (size + threadsPerBlock - 1) / threadsPerBlock;
