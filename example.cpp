@@ -1,27 +1,30 @@
 #include <iostream>
+#include <ctime>
 #include "./hpp/vector.hpp"
 
 int main()
 {
-	int size = 4;
-	float array1[] = {2, 3, 1, 1};
-	float array2[] = {1, 2, 3, 5};
+	int size = 8e7;
+	float *array1 = new float[size];
+	float *array2 = new float[size];
+	for (int i = 0; i < size; i++)
+	{
+		array1[i] = 3.4;
+		array2[i] = 5.1;
+	}
 
 	Vector vector1(size, array1);
 	Vector vector2(size, array2);
 
+	clock_t t1 = clock();
 	Vector sum = vector1 + vector2;
-	float dot = vector1 * vector2;
-	Vector prod = vector1 * 3;
-
-	std::cout << "sum = " << sum;			  // sum = [3  5  4  6]
-	std::cout << "\ndot = " << dot;			  // dot = 16
-	std::cout << "\nprod = " << prod << "\n"; // prod = [6  9  3  3]
+	clock_t t2 = clock();
+	std::cout << "Sum 2 Vector objects of size = " << size << "\n";
+	std::cout << "--> elapsed time = " << double(t2 - t1) / CLOCKS_PER_SEC << "\n";
 
 	vector1.free();
 	vector2.free();
 	sum.free();
-	prod.free();
 
 	return 0;
 }
