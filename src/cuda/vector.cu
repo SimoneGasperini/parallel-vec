@@ -29,7 +29,7 @@ Vector Vector::operator+(const Vector &that)
 	cudaMalloc(&result, size * sizeof(float));
 
 	int threadsPerBlock = 256;
-	int numberOfBlocks = ceil(size / threadsPerBlock);
+	int numberOfBlocks = (size + threadsPerBlock - 1) / threadsPerBlock;
 	parallel_add<<<numberOfBlocks, threadsPerBlock>>>(size, array, that.array, result);
 	cudaDeviceSynchronize();
 
@@ -44,7 +44,7 @@ float Vector::operator*(const Vector &that)
 	cudaMalloc(&result, size * sizeof(float));
 
 	int threadsPerBlock = 256;
-	int numberOfBlocks = ceil(size / threadsPerBlock);
+	int numberOfBlocks = (size + threadsPerBlock - 1) / threadsPerBlock;
 	parallel_mul<<<numberOfBlocks, threadsPerBlock>>>(size, array, that.array, result);
 	cudaDeviceSynchronize();
 
@@ -61,7 +61,7 @@ Vector Vector::operator*(float scalar)
 	cudaMalloc(&result, size * sizeof(float));
 
 	int threadsPerBlock = 256;
-	int numberOfBlocks = ceil(size / threadsPerBlock);
+	int numberOfBlocks = (size + threadsPerBlock - 1) / threadsPerBlock;
 	parallel_mul<<<numberOfBlocks, threadsPerBlock>>>(size, array, scalar, result);
 	cudaDeviceSynchronize();
 
