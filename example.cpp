@@ -9,6 +9,7 @@ int main()
 
 	Vector vector1(size, array1);
 	Vector vector2(size, array2);
+
 	Vector sum = vector1 + vector2;
 	float dot = vector1 * vector2;
 	Vector prod = vector1 * 3;
@@ -16,6 +17,11 @@ int main()
 	std::cout << "sum = " << sum;			  // sum = [3  5  4  6]
 	std::cout << "\ndot = " << dot;			  // dot = 16
 	std::cout << "\nprod = " << prod << "\n"; // prod = [6  9  3  3]
+
+	vector1.free();
+	vector2.free();
+	sum.free();
+	prod.free();
 
 	return 0;
 }

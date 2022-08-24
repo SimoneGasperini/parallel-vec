@@ -6,7 +6,8 @@ class Vector
 	float *array;
 
 public:
-	Vector(int size, float *array);
+	Vector(int size, float *array, bool malloc = true);
+	void free();
 
 	Vector operator+(const Vector &that);
 	float operator*(const Vector &that);

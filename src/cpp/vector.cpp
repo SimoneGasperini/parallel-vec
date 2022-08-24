@@ -1,30 +1,30 @@
 #include <iostream>
-#include "../hpp/vector.hpp"
-#include "../include/serial_func.h"
+#include "../../hpp/vector.hpp"
+#include "../../include/serial_func.h"
 
-Vector::Vector(int _size, float *_array)
+Vector::Vector(int _size, float *_array, bool _malloc)
 {
 	size = _size;
-	array = new float[size];
-	for (int i = 0; i < size; i++)
+
+	if (_malloc)
 	{
-		array[i] = _array[i];
+		array = new float[size];
+		for (int i = 0; i < size; i++)
+			array[i] = _array[i];
 	}
+	else
+	{
+		array = _array;
+	}
+}
+
+void Vector::free()
+{
+	delete array;
 }
 
 Vector Vector::operator+(const Vector &that)
 {
-	try
-	{
-		if (size != that.size)
-			throw "Vector Vector::operator+(const Vector &) -->\n\tThe vectors have different sizes\n";
-	}
-	catch (const char *err)
-	{
-		std::cout << "ERROR: " << err;
-		throw;
-	}
-
 	float *array_sum = serial_add(size, array, that.array);
 	Vector sum(size, array_sum);
 
@@ -33,23 +33,10 @@ Vector Vector::operator+(const Vector &that)
 
 float Vector::operator*(const Vector &that)
 {
-	try
-	{
-		if (size != that.size)
-			throw "float Vector::operator*(const Vector &) -->\n\tThe vectors have different sizes\n";
-	}
-	catch (const char *err)
-	{
-		std::cout << "ERROR: " << err;
-		throw;
-	}
-
 	float *array_prod = serial_mul(size, array, that.array);
 	float dot = 0;
 	for (int i = 0; i < size; i++)
-	{
 		dot += array_prod[i];
-	}
 
 	return dot;
 }
