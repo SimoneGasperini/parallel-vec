@@ -1,3 +1,5 @@
+.vscode
+
 # Prerequisites
 *.d
 
@@ -30,10 +32,3 @@
 *.exe
 *.out
 *.app
-
-# CMake
-*.cmake
-*.tcl
-CMakeFiles
-CMakeCache.txt
-Makefile
